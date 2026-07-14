@@ -46,8 +46,12 @@
         .expense-item { background: #f8faff; border: 1px solid #e1e8f0; border-radius: 8px; padding: 10px; text-align: center; }
         .expense-label { font-size: 0.9rem; color: #666; font-weight: bold; }
         .expense-value { font-size: 1.1rem; font-weight: bold; margin-top: 5px; color: var(--text-color); }
+        
         .btn-detail { display: block; width: 100%; background: var(--secondary-color); color: white; border: none; padding: 12px; border-radius: 8px; font-size: 1rem; font-weight: bold; cursor: pointer; transition: 0.3s; text-align: center; box-sizing: border-box; }
         .btn-detail:hover { background: #e67e22; }
+        
+        .btn-splitwise { display: block; width: 100%; background: #5bc5a7; color: white; text-decoration: none; border: none; padding: 12px; border-radius: 8px; font-size: 1rem; font-weight: bold; transition: 0.3s; text-align: center; box-sizing: border-box; margin-top: 10px; }
+        .btn-splitwise:hover { background: #45a085; }
 
         /* --- 彈出視窗 Modal --- */
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); }
@@ -81,6 +85,7 @@
         .time-item { display: flex; margin-bottom: 15px; border-bottom: 1px dashed #eee; padding-bottom: 10px; }
         .time-label { font-weight: bold; color: var(--secondary-color); min-width: 60px; font-size: 1.1rem; }
         .time-content { flex: 1; }
+        .highlight-time { background-color: #fff3cd; color: #856404; padding: 2px 6px; border-radius: 4px; border: 1px solid #ffeeba; }
         
         .alishan-included { background: #f0f9f4; border: 1px solid var(--light-green); border-radius: 8px; padding: 15px; margin: 15px 0; }
         .alishan-included h4 { color: var(--dark-green); margin-top: 0; margin-bottom: 10px; }
@@ -136,6 +141,7 @@
                     <div class="expense-item"><div class="expense-label">🎒 旅行</div><div class="expense-value" id="total-tour">$ 0</div></div>
                 </div>
                 <button class="btn-detail" onclick="openModal()">📝 點此查看細項 / 新增花費</button>
+                <a href="https://www.splitwise.com/join/qk6WfPZC1nP+kf784?v=s" target="_blank" class="btn-splitwise">💸 加入 Splitwise 分帳群組</a>
             </div>
         </div>
 
@@ -195,7 +201,7 @@
         <!-- Day 1 -->
         <div class="detail-card">
             <h3>1️⃣ 第1天 8/5(三)：抵達嘉義・市區吃貨大集結</h3>
-            <div class="time-item"><div class="time-label">14:29</div><div class="time-content">板橋搭乘高鐵 649 車次，15:48 抵達嘉義</div></div>
+            <div class="time-item"><div class="time-label">14:29</div><div class="time-content"><strong class="highlight-time">【板橋高鐵站】14:29 出發</strong>，搭乘高鐵 649 車次，15:48 抵達嘉義</div></div>
             <div class="time-item">
                 <div class="time-label">下午</div>
                 <div class="time-content">
@@ -270,16 +276,22 @@
             <div class="time-item"><div class="time-label">11:00</div><div class="time-content">辦理退房手續，寄放行李後自由活動。</div></div>
             <div class="time-item"><div class="time-label">11:50</div><div class="time-content">於阿里山火車站搭乘小火車前往嘉義 (請務必提早10分鐘抵達)。</div></div>
             <div class="time-item"><div class="time-label">15:45</div><div class="time-content">阿里山小火車抵達嘉義火車站，結束山區行程。</div></div>
-            <div class="time-item"><div class="time-label">16:19</div><div class="time-content"><strong>轉場交通：</strong>搭乘台鐵 125 車次前往台南 (單價$203，16:59抵達)。</div></div>
+            <div class="time-item"><div class="time-label">16:19</div><div class="time-content"><strong class="highlight-time">【嘉義火車站】16:19 出發</strong>，搭乘台鐵 125 車次前往台南 (單價$203，16:59抵達)。</div></div>
             <div class="time-item"><div class="time-label">晚上</div><div class="time-content">於台南民宿放行李 👉 漁光島看夕陽 👉 市區吃好料！入住：村料理民宿。</div></div>
         </div>
 
         <!-- Day 5 -->
         <div class="detail-card">
             <h3>5️⃣ 第5天 8/9(日)：台南包車一日遊 & 賦歸</h3>
-            <div class="time-item"><div class="time-label">09:00</div><div class="time-content">包車 8 小時出發，預定景點：鹿耳門天后宮、四草綠色隧道。</div></div>
+            <div class="time-item">
+                <div class="time-label">09:00</div>
+                <div class="time-content">
+                    包車 8 小時出發，預定景點：鹿耳門天后宮、四草綠色隧道。<br>
+                    <a href="https://www.taiwantourcar.com/tainan-chiayi/?srsltid=AfmBOopUBFBJx2OFFHQ_fTSM4CGya9wWBFsjC424r0wj68xb1qit-A_f" target="_blank" class="btn">🔗 前往查看包車資訊</a>
+                </div>
+            </div>
             <div class="time-item"><div class="time-label">下午</div><div class="time-content">市區吃飯，安插 1-2 個討論景點。</div></div>
-            <div class="time-item"><div class="time-label">17:28</div><div class="time-content">台南搭乘高鐵 1246 車次 (單價$1320)，18:46 抵達板橋。</div></div>
+            <div class="time-item"><div class="time-label">17:28</div><div class="time-content"><strong class="highlight-time">【台南高鐵站】17:28 出發</strong>，搭乘高鐵 1246 車次 (單價$1320)，18:46 抵達板橋。</div></div>
         </div>
 
         <!-- 住宿資訊 -->
@@ -293,7 +305,8 @@
                 <div class="hotel-actions"><a href="https://www.agoda.com/sp/Gemp13fdJCz" target="_blank" class="btn">🔗 Agoda 訂房資訊</a></div>
             </div>
             <div class="hotel-card">
-                <img src="https://images.unsplash.com/photo-1522771731478-446370c8f957?q=80&w=600&auto=format&fit=crop" alt="溫馨民宿">
+                <!-- 更新為您指定的台南住宿圖片 -->
+                <img src="image_a6a308.jpg" alt="村料理民宿">
                 <h3>村料理 民宿 8/8(六)</h3>
                 <span class="tag">🚶‍♂️ 台南車站走路12分鐘</span>
                 <p>📍 台南中西區觀亭街39號<br>💰 $ 4,500 (五人一房)</p>
@@ -321,7 +334,7 @@
                     <option value="食物">🍜 食物</option>
                     <option value="旅行">🎒 旅行</option>
                 </select>
-                <input type="text" id="new-name" placeholder="項目名稱 (例：宵夜啤酒)">
+                <input type="text" id="new-name" placeholder="項目名稱 (例：宵夜)">
                 <input type="number" id="new-amount" placeholder="金額 ($)">
                 <button class="add-btn" onclick="addExpense()">新增</button>
             </div>
@@ -341,16 +354,23 @@
 
         var hotelIcon = L.divIcon({className: 'custom-icon', html: '🏠', iconSize: [30, 30], iconAnchor: [15, 30]});
         var spotIcon = L.divIcon({className: 'custom-icon', html: '📍', iconSize: [30, 30], iconAnchor: [15, 30]});
+        var trainIcon = L.divIcon({className: 'custom-icon', html: '🚉', iconSize: [30, 30], iconAnchor: [15, 30]});
 
+        // 住宿地標
         L.marker([23.4764, 120.4431], {icon: hotelIcon}).addTo(map).bindPopup('<b>🏠 葉綠宿.漫漫回嘉</b><br>8/5(三) 嘉義住宿').openPopup();
         L.marker([22.9984, 120.2074], {icon: hotelIcon}).addTo(map).bindPopup('<b>🏠 村料理</b><br>8/8(六) 台南住宿');
+        
+        // 景點地標
         L.marker([23.5133, 120.8060], {icon: spotIcon}).addTo(map).bindPopup('<b>🌲 阿里山森林遊樂區</b><br>8/6(四)-8/8(六) 行程');
         L.marker([23.5041, 120.6946], {icon: spotIcon}).addTo(map).bindPopup('<b>🚂 奮起湖老街</b><br>阿里山中途站');
         L.marker([22.9796, 120.1557], {icon: spotIcon}).addTo(map).bindPopup('<b>🌅 漁光島</b><br>8/8(六) 傍晚看夕陽');
         L.marker([23.0198, 120.1363], {icon: spotIcon}).addTo(map).bindPopup('<b>🛶 四草綠色隧道</b><br>8/9(日) 台南包車景點');
 
+        // 車站地標 (新加入)
+        L.marker([23.4792, 120.4414], {icon: trainIcon}).addTo(map).bindPopup('<b>🚉 嘉義火車站</b><br>台鐵轉乘與集合點');
+        L.marker([22.9971, 120.2126], {icon: trainIcon}).addTo(map).bindPopup('<b>🚉 台南火車站</b><br>8/8 抵達台南轉乘點');
+
         // --- 互動式記帳功能 ---
-        // 預設已知的固定花費 (高鐵 945, 台鐵 203, 高鐵 1320, KKday 8000)
         const defaultData = [
             { id: 1, category: '住宿', name: '葉綠宿.漫漫回嘉 (4人)', amount: 2688 },
             { id: 2, category: '住宿', name: '村料理民宿 (5人)', amount: 4500 },
@@ -362,7 +382,6 @@
 
         let expenses = [];
 
-        // 讀取紀錄或載入預設
         function loadExpenses() {
             const saved = localStorage.getItem('tripExpenses');
             if (saved) {
@@ -374,13 +393,11 @@
             updateDashboard();
         }
 
-        // 儲存進瀏覽器暫存
         function saveExpenses() {
             localStorage.setItem('tripExpenses', JSON.stringify(expenses));
             updateDashboard();
         }
 
-        // 更新面板與清單
         function updateDashboard() {
             let total = 0;
             let sums = { '住宿': 0, '交通': 0, '食物': 0, '旅行': 0 };
@@ -399,18 +416,15 @@
                 </tr>`;
             });
 
-            // 寫入面板
             document.getElementById('total-amount').innerText = `$ ${total.toLocaleString()}`;
             document.getElementById('total-stay').innerText = `$ ${sums['住宿'].toLocaleString()}`;
             document.getElementById('total-trans').innerText = `$ ${sums['交通'].toLocaleString()}`;
             document.getElementById('total-food').innerText = `$ ${sums['食物'].toLocaleString()}`;
             document.getElementById('total-tour').innerText = `$ ${sums['旅行'].toLocaleString()}`;
 
-            // 寫入彈出視窗清單
             document.getElementById('expense-list').innerHTML = listHtml;
         }
 
-        // 新增花費
         function addExpense() {
             const cat = document.getElementById('new-cat').value;
             const name = document.getElementById('new-name').value;
@@ -423,14 +437,12 @@
 
             expenses.push({ id: Date.now(), category: cat, name: name, amount: amount });
             
-            // 清空輸入框
             document.getElementById('new-name').value = '';
             document.getElementById('new-amount').value = '';
             
             saveExpenses();
         }
 
-        // 刪除花費
         function deleteExpense(index) {
             if(confirm("確定要刪除這筆紀錄嗎？")) {
                 expenses.splice(index, 1);
@@ -438,7 +450,6 @@
             }
         }
 
-        // 控制彈出視窗
         function openModal() { document.getElementById('expenseModal').style.display = 'block'; }
         function closeModal() { document.getElementById('expenseModal').style.display = 'none'; }
         
@@ -448,7 +459,6 @@
             }
         }
 
-        // 啟動載入
         loadExpenses();
     </script>
 </body>
