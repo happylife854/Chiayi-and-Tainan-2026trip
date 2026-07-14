@@ -4,11 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>嘉義台南五日遊 8/5-8/9</title>
+    
+    <!-- 引入地圖套件 Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;700&display=swap');
         
         :root {
             --primary-color: #4A90E2;
+            --secondary-color: #FF8C00;
             --bg-color: #F7F9FC;
             --text-color: #333333;
             --card-bg: #FFFFFF;
@@ -23,10 +28,10 @@
             line-height: 1.6;
         }
 
-        /* 首頁橫幅 Hero Section */
+        /* 首頁橫幅 */
         .hero {
             background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://images.unsplash.com/photo-1578507025175-1082c9c73335?q=80&w=2000&auto=format&fit=crop') center/cover;
-            height: 60vh;
+            height: 50vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -36,130 +41,61 @@
             padding: 20px;
         }
 
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 10px;
-            letter-spacing: 2px;
-        }
+        .hero h1 { font-size: 2.8rem; margin-bottom: 10px; letter-spacing: 2px; }
+        .hero p { font-size: 1.2rem; background-color: rgba(255,255,255,0.2); padding: 5px 15px; border-radius: 20px; }
 
-        .hero p {
-            font-size: 1.2rem;
-            background-color: rgba(255,255,255,0.2);
-            padding: 5px 15px;
-            border-radius: 20px;
-        }
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+        .section-title { text-align: center; font-size: 1.8rem; color: var(--primary-color); margin: 40px 0 20px; }
 
-        /* 區塊標題 */
-        .section-title {
-            text-align: center;
-            font-size: 2rem;
-            color: var(--primary-color);
-            margin: 40px 0 20px;
-            position: relative;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        /* 行程時間軸 Timeline */
-        .timeline {
-            position: relative;
-            margin: 20px 0;
-        }
-
-        .day-card {
-            background: var(--card-bg);
+        /* 地圖區塊 */
+        #map {
+            height: 400px;
+            width: 100%;
             border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            border-left: 5px solid var(--primary-color);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+            z-index: 1; /* 避免遮擋其他選單 */
         }
+        .custom-icon { font-size: 28px; text-align: center; line-height: 1; }
 
-        .day-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--primary-color);
-            margin-top: 0;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+        /* 花費儀表板 */
+        .expense-dashboard { background: var(--card-bg); border-radius: 12px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 40px; }
+        .expense-total { text-align: center; font-size: 1.5rem; font-weight: bold; color: var(--text-color); margin-bottom: 20px; padding-bottom: 15px; border-bottom: 2px dashed #eee; }
+        .expense-total span { color: var(--secondary-color); font-size: 2rem; }
+        .expense-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; }
+        .expense-item { background: #f8faff; border: 1px solid #e1e8f0; border-radius: 8px; padding: 15px; text-align: center; }
+        .expense-icon { font-size: 2rem; margin-bottom: 5px; }
+        .expense-label { font-size: 0.9rem; color: #666; font-weight: bold; }
+        .expense-value { font-size: 1.2rem; color: var(--text-color); font-weight: bold; margin-top: 5px; }
 
-        .day-card ul {
-            padding-left: 20px;
-        }
+        /* 行程時間軸 */
+        .day-card { background: var(--card-bg); border-radius: 12px; padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border-left: 5px solid var(--primary-color); }
+        .day-title { font-size: 1.3rem; font-weight: 700; color: var(--primary-color); margin-top: 0; }
+        .day-card ul { padding-left: 20px; }
+        .day-card li { margin-bottom: 12px; }
+        .food-spot { color: #d35400; font-weight: bold; }
 
-        .day-card li {
-            margin-bottom: 8px;
-        }
-
-        /* 住宿資訊 Cards */
-        .hotel-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-        }
-
-        .hotel-card {
-            background: var(--card-bg);
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        }
-
-        .hotel-card h3 {
-            margin-top: 0;
-            color: #d35400;
-        }
-        
-        .tag {
-            display: inline-block;
-            background: #eee;
-            padding: 3px 8px;
-            border-radius: 5px;
-            font-size: 0.85rem;
-            margin-right: 5px;
-            margin-bottom: 5px;
-        }
+        /* 住宿資訊 */
+        .hotel-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .hotel-card { background: var(--card-bg); border-radius: 12px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .hotel-card img { width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 15px; }
+        .hotel-card h3 { margin-top: 0; color: var(--secondary-color); }
+        .hotel-card p { margin-bottom: 8px; }
+        .tag { display: inline-block; background: #eee; padding: 3px 8px; border-radius: 5px; font-size: 0.85rem; margin-right: 5px; margin-bottom: 10px; }
+        .hotel-actions { margin-top: 15px; text-align: center; }
+        .hotel-actions a.btn { width: 100%; box-sizing: border-box; display: block; padding: 10px; }
 
         /* 連結按鈕 */
-        a.btn {
-            display: inline-block;
-            background-color: var(--primary-color);
-            color: white;
-            text-decoration: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            font-size: 0.9rem;
-            margin-top: 10px;
-            transition: background 0.3s;
-        }
+        a.btn { display: inline-block; background-color: var(--primary-color); color: white; text-decoration: none; padding: 5px 12px; border-radius: 5px; font-size: 0.95rem; font-weight: bold; transition: background 0.3s; }
+        a.btn:hover { background-color: #357ABD; }
+        a.map-link { color: #4A90E2; text-decoration: none; font-size: 0.9rem; font-weight: bold; }
+        a.map-link:hover { text-decoration: underline; }
 
-        a.btn:hover {
-            background-color: #357ABD;
-        }
-
-        /* 頁尾 */
-        footer {
-            text-align: center;
-            padding: 20px;
-            background-color: #333;
-            color: white;
-            margin-top: 40px;
-        }
-
-        @media (max-width: 600px) {
-            .hero h1 { font-size: 2.2rem; }
-        }
+        footer { text-align: center; padding: 20px; background-color: #333; color: white; margin-top: 40px; }
     </style>
 </head>
 <body>
 
-    <!-- 首頁橫幅 -->
     <header class="hero">
         <h1>嘉義台南五日遊</h1>
         <p>2026/8/5 (三) - 2026/8/9 (日)</p>
@@ -167,17 +103,55 @@
 
     <div class="container">
         
+        <!-- 互動式地圖區塊 -->
+        <h2 class="section-title">🗺️ 五日遊行程地圖</h2>
+        <div id="map"></div>
+
+        <!-- 花費欄位 -->
+        <h2 class="section-title">💰 目前已花費總覽</h2>
+        <div class="expense-dashboard">
+            <div class="expense-total">
+                群組總花費：<span>$ 28,148</span>
+                <div style="font-size: 0.8rem; color: #888; font-weight: normal; margin-top: 5px;">(金額為暫估，可隨時更新)</div>
+            </div>
+            <div class="expense-grid">
+                <div class="expense-item">
+                    <div class="expense-icon">🏠</div>
+                    <div class="expense-label">1. 住宿</div>
+                    <div class="expense-value">$ 7,188</div>
+                </div>
+                <div class="expense-item">
+                    <div class="expense-icon">🚆</div>
+                    <div class="expense-label">2. 交通</div>
+                    <div class="expense-value">$ 11,005</div>
+                </div>
+                <div class="expense-item">
+                    <div class="expense-icon">🍜</div>
+                    <div class="expense-label">3. 食物</div>
+                    <div class="expense-value">$ 0</div>
+                </div>
+                <div class="expense-item">
+                    <div class="expense-icon">🎒</div>
+                    <div class="expense-label">4. 旅行 (門票/包車)</div>
+                    <div class="expense-value">$ 9,955</div>
+                </div>
+            </div>
+        </div>
+
         <!-- 行程總覽 -->
         <h2 class="section-title">📍 行程總覽</h2>
         
         <div class="timeline">
             <!-- Day 1 -->
             <div class="day-card">
-                <h3 class="day-title">1️⃣ 8/5 第一天 (星期三)：出發前往嘉義</h3>
+                <h3 class="day-title">1️⃣ 8/5 第一天：抵達嘉義・市區吃貨大集結 (共4人)</h3>
                 <ul>
-                    <li><strong>交通：</strong>中午過後出發，預計搭乘 <strong>14:29</strong> 的車，約 <strong>16:00</strong> 抵達嘉義。</li>
-                    <li><strong>活動：</strong>到嘉義附近休息與遊玩，逛夜市或市區景點。</li>
-                    <li><strong>住宿：</strong>入住民宿休息 (葉綠宿.漫漫回嘉)。</li>
+                    <li><strong>交通：</strong>高鐵 649 車次 (14:29 板橋出發 👉 15:48 抵達嘉義)</li>
+                    <li><strong>下午茶：</strong><span class="food-spot">巴倫司康</span> - 必吃外酥內軟的超人氣司康！ <a href="https://maps.app.goo.gl/gFPW6cnhvWwuQGdp9" class="map-link">📍地圖</a></li>
+                    <li><strong>飲料：</strong><span class="food-spot">源興御香屋</span> - 沒喝到葡萄柚綠茶等於沒來過嘉義！ <a href="https://maps.app.goo.gl/gFPW6cnhvWwuQGdp9" class="map-link">📍地圖</a></li>
+                    <li><strong>晚餐：</strong><span class="food-spot">豆豆小籠湯包</span> - 嘉義平價版鼎泰豐，皮薄汁多 (注意: 內用至20:10) <a href="https://maps.app.goo.gl/gFPW6cnhvWwuQGdp9" class="map-link">📍地圖</a></li>
+                    <li><strong>宵夜：</strong><span class="food-spot">1961海鮮碳烤</span> - 氣氛超讚的海鮮熱炒，晚上小酌首選 <a href="https://maps.app.goo.gl/gFPW6cnhvWwuQGdp9" class="map-link">📍地圖</a></li>
+                    <li><strong>住宿：</strong>入住民宿休息 (葉綠宿.漫漫回嘉)</li>
                 </ul>
             </div>
 
@@ -185,47 +159,58 @@
             <div class="day-card">
                 <h3 class="day-title">2️⃣ 8/6～8/8 第二至第四天：阿里山三日遊 & 轉往台南</h3>
                 <ul>
-                    <li><strong>活動：</strong>參加 KKday 阿里山三日遊行程 (嘉義火車站集合/解散)。</li>
-                    <li><a href="https://www.kkday.com/zh-tw/product/186797" target="_blank" class="btn">🔗 查看 KKday 行程</a></li>
-                    <li><strong>8/8 下午轉場：</strong>行程預計 15:45 抵達嘉義火車站。</li>
-                    <li><strong>交通：</strong>搭乘 <strong>16:19</strong> 班次從 嘉義火車站 前往 台南火車站。</li>
-                    <li><strong>台南夜晚：</strong>於台南火車站附近住宿放行李 👉 漁光島看夕陽 👉 市區吃好料！</li>
+                    <li><strong>活動：</strong>參加 KKday 阿里山三日遊行程 <a href="https://www.kkday.com/zh-tw/product/186797" target="_blank" class="btn">🔗 行程資訊</a></li>
+                    <li><strong>奮起湖必吃 1：</strong><span class="food-spot">百年檜木甜甜圈</span> - 木屋現烤，外皮酥脆奶香濃郁！ <a href="https://maps.app.goo.gl/gFPW6cnhvWwuQGdp9" class="map-link">📍地圖</a></li>
+                    <li><strong>奮起湖必吃 2：</strong><span class="food-spot">達官現炒</span> - 阿里山行程必吃的高山蔬菜與在地野味！ <a href="https://maps.app.goo.gl/gFPW6cnhvWwuQGdp9" class="map-link">📍地圖</a></li>
+                    <hr style="border:0; border-top:1px dashed #ccc; margin: 15px 0;">
+                    <li><strong>8/8 下午轉場 (增為5人)：</strong>行程預計 15:45 抵達嘉義火車站。</li>
+                    <li><strong>交通：</strong>台鐵 125 車次 (16:19 嘉義火車站 👉 16:59 台南火車站)</li>
+                    <li><strong>台南夜晚：</strong>民宿放行李 👉 漁光島看夕陽 👉 台南市區吃好料！</li>
                 </ul>
             </div>
 
             <!-- Day 5 -->
             <div class="day-card">
-                <h3 class="day-title">3️⃣ 8/9 第五天 (週日)：台南包車一日遊 & 賦歸</h3>
+                <h3 class="day-title">3️⃣ 8/9 第五天：台南包車一日遊 & 賦歸 (共5人)</h3>
                 <ul>
-                    <li><strong>包車資訊：</strong>預計包車 8 小時，<strong>09:00</strong> 出發。</li>
-                    <li><a href="https://www.taiwantourcar.com/tainan-chiayi/?srsltid=AfmBOopUBFBJx2OFFHQ_fTSM4CGya9wWBFsjC424r0wj68xb1qit-A_f" target="_blank" class="btn">🔗 查看包車資訊</a></li>
-                    <li><strong>預定景點：</strong>鹿耳門天后宮、四草綠色隧道 (台江國家公園)、市區吃飯 (可再討論 1-2 個景點)。</li>
-                    <li><strong>回程：</strong>搭乘 <strong>17:28</strong> 台南高鐵 回板橋。</li>
+                    <li><strong>包車資訊：</strong>預計包車 8 小時，09:00 出發 <a href="https://www.taiwantourcar.com/tainan-chiayi/?srsltid=AfmBOopUBFBJx2OFFHQ_fTSM4CGya9wWBFsjC424r0wj68xb1qit-A_f" target="_blank" class="btn">🔗 包車資訊</a></li>
+                    <li><strong>預定景點：</strong>鹿耳門天后宮、四草綠色隧道 (台江國家公園)</li>
+                    <li><strong>行程討論：</strong>市區吃飯、再安插 1-2 個景點</li>
+                    <li><strong>回程交通：</strong>高鐵 1246 車次 (17:28 台南高鐵 👉 18:46 回板橋)</li>
                 </ul>
             </div>
         </div>
 
-        <!-- 住宿資訊 -->
+        <!-- 住宿資訊 (有圖版) -->
         <h2 class="section-title">🏡 住宿資訊</h2>
-        
         <div class="hotel-grid">
+            
             <!-- 嘉義住宿 -->
             <div class="hotel-card">
+                <img src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?q=80&w=600&auto=format&fit=crop" alt="質感旅店">
                 <h3>葉綠宿.漫漫回嘉 (8/5)</h3>
-                <span class="tag">嘉義車站走路9分鐘</span>
+                <span class="tag">🚶‍♂️ 嘉義車站走路9分鐘</span>
                 <p><strong>📍 地址：</strong>嘉義市西區民生北路175號177號</p>
                 <p><strong>🛏️ 房型：</strong>兩人一間房，一人一張床 (相鄰兩間)</p>
-                <p><strong>💰 價格：</strong>兩間房共 2,688 元</p>
+                <p><strong>💰 價格：</strong>$ 2,688 (共四人)</p>
+                <div class="hotel-actions">
+                    <a href="https://www.agoda.com/sp/Gemp13fdJCz" target="_blank" class="btn">🔗 前往 Agoda 查看旅館</a>
+                </div>
             </div>
 
             <!-- 台南住宿 -->
             <div class="hotel-card">
+                <img src="https://images.unsplash.com/photo-1522771731478-446370c8f957?q=80&w=600&auto=format&fit=crop" alt="溫馨民宿">
                 <h3>村料理 民宿 (8/8)</h3>
-                <span class="tag">台南車站走路12分鐘</span>
+                <span class="tag">🚶‍♂️ 台南車站走路12分鐘</span>
                 <p><strong>📍 地址：</strong>台南中西區觀亭街39號</p>
                 <p><strong>🛏️ 房型：</strong>五人一房</p>
-                <p><strong>💰 價格：</strong>4,500 元</p>
+                <p><strong>💰 價格：</strong>$ 4,500 (共五人)</p>
+                <div class="hotel-actions">
+                    <a href="https://www.booking.com/Share-vARxYL0" target="_blank" class="btn">🔗 前往 Booking.com 查看民宿</a>
+                </div>
             </div>
+
         </div>
 
     </div>
@@ -234,5 +219,31 @@
         <p>嘉義台南五日遊 | Have a nice trip!</p>
     </footer>
 
+    <!-- 引入地圖套件 Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // 初始化地圖，中心點設在嘉義與台南之間，縮放級別為 9
+        var map = L.map('map').setView([23.25, 120.45], 9);
+
+        // 載入 OpenStreetMap 圖資
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 18,
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // 自訂圖示樣式
+        var hotelIcon = L.divIcon({className: 'custom-icon', html: '🏠', iconSize: [30, 30], iconAnchor: [15, 30]});
+        var spotIcon = L.divIcon({className: 'custom-icon', html: '📍', iconSize: [30, 30], iconAnchor: [15, 30]});
+
+        // 標記：住宿地點
+        L.marker([23.4764, 120.4431], {icon: hotelIcon}).addTo(map).bindPopup('<b>🏠 葉綠宿.漫漫回嘉</b><br>8/5 嘉義住宿').openPopup();
+        L.marker([22.9984, 120.2074], {icon: hotelIcon}).addTo(map).bindPopup('<b>🏠 村料理</b><br>8/8 台南住宿');
+
+        // 標記：重要旅遊地標
+        L.marker([23.5133, 120.8060], {icon: spotIcon}).addTo(map).bindPopup('<b>🌲 阿里山森林遊樂區</b><br>8/6-8/8 行程');
+        L.marker([23.5041, 120.6946], {icon: spotIcon}).addTo(map).bindPopup('<b>🚂 奮起湖老街</b><br>阿里山中途站');
+        L.marker([22.9796, 120.1557], {icon: spotIcon}).addTo(map).bindPopup('<b>🌅 漁光島</b><br>8/8 傍晚看夕陽');
+        L.marker([23.0198, 120.1363], {icon: spotIcon}).addTo(map).bindPopup('<b>🛶 四草綠色隧道</b><br>8/9 台南包車景點');
+    </script>
 </body>
 </html>
