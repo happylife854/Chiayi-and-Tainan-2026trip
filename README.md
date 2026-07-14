@@ -1,1 +1,239 @@
 # Chiayi-and-Tainan-2026trip
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>嘉義台南五日遊 8/5-8/9</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;700&display=swap');
+        
+        :root {
+            --primary-color: #4A90E2;
+            --bg-color: #F7F9FC;
+            --text-color: #333333;
+            --card-bg: #FFFFFF;
+        }
+
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        /* 首頁橫幅 Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://images.unsplash.com/photo-1578507025175-1082c9c73335?q=80&w=2000&auto=format&fit=crop') center/cover;
+            height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            background-color: rgba(255,255,255,0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+        }
+
+        /* 區塊標題 */
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin: 40px 0 20px;
+            position: relative;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* 行程時間軸 Timeline */
+        .timeline {
+            position: relative;
+            margin: 20px 0;
+        }
+
+        .day-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-left: 5px solid var(--primary-color);
+        }
+
+        .day-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .day-card ul {
+            padding-left: 20px;
+        }
+
+        .day-card li {
+            margin-bottom: 8px;
+        }
+
+        /* 住宿資訊 Cards */
+        .hotel-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .hotel-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .hotel-card h3 {
+            margin-top: 0;
+            color: #d35400;
+        }
+        
+        .tag {
+            display: inline-block;
+            background: #eee;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-size: 0.85rem;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+
+        /* 連結按鈕 */
+        a.btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            transition: background 0.3s;
+        }
+
+        a.btn:hover {
+            background-color: #357ABD;
+        }
+
+        /* 頁尾 */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: white;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 2.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 首頁橫幅 -->
+    <header class="hero">
+        <h1>嘉義台南五日遊</h1>
+        <p>2026/8/5 (三) - 2026/8/9 (日)</p>
+    </header>
+
+    <div class="container">
+        
+        <!-- 行程總覽 -->
+        <h2 class="section-title">📍 行程總覽</h2>
+        
+        <div class="timeline">
+            <!-- Day 1 -->
+            <div class="day-card">
+                <h3 class="day-title">1️⃣ 8/5 第一天 (星期三)：出發前往嘉義</h3>
+                <ul>
+                    <li><strong>交通：</strong>中午過後出發，預計搭乘 <strong>14:29</strong> 的車，約 <strong>16:00</strong> 抵達嘉義。</li>
+                    <li><strong>活動：</strong>到嘉義附近休息與遊玩，逛夜市或市區景點。</li>
+                    <li><strong>住宿：</strong>入住民宿休息 (葉綠宿.漫漫回嘉)。</li>
+                </ul>
+            </div>
+
+            <!-- Day 2-4 -->
+            <div class="day-card">
+                <h3 class="day-title">2️⃣ 8/6～8/8 第二至第四天：阿里山三日遊 & 轉往台南</h3>
+                <ul>
+                    <li><strong>活動：</strong>參加 KKday 阿里山三日遊行程 (嘉義火車站集合/解散)。</li>
+                    <li><a href="https://www.kkday.com/zh-tw/product/186797" target="_blank" class="btn">🔗 查看 KKday 行程</a></li>
+                    <li><strong>8/8 下午轉場：</strong>行程預計 15:45 抵達嘉義火車站。</li>
+                    <li><strong>交通：</strong>搭乘 <strong>16:19</strong> 班次從 嘉義火車站 前往 台南火車站。</li>
+                    <li><strong>台南夜晚：</strong>於台南火車站附近住宿放行李 👉 漁光島看夕陽 👉 市區吃好料！</li>
+                </ul>
+            </div>
+
+            <!-- Day 5 -->
+            <div class="day-card">
+                <h3 class="day-title">3️⃣ 8/9 第五天 (週日)：台南包車一日遊 & 賦歸</h3>
+                <ul>
+                    <li><strong>包車資訊：</strong>預計包車 8 小時，<strong>09:00</strong> 出發。</li>
+                    <li><a href="https://www.taiwantourcar.com/tainan-chiayi/?srsltid=AfmBOopUBFBJx2OFFHQ_fTSM4CGya9wWBFsjC424r0wj68xb1qit-A_f" target="_blank" class="btn">🔗 查看包車資訊</a></li>
+                    <li><strong>預定景點：</strong>鹿耳門天后宮、四草綠色隧道 (台江國家公園)、市區吃飯 (可再討論 1-2 個景點)。</li>
+                    <li><strong>回程：</strong>搭乘 <strong>17:28</strong> 台南高鐵 回板橋。</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 住宿資訊 -->
+        <h2 class="section-title">🏡 住宿資訊</h2>
+        
+        <div class="hotel-grid">
+            <!-- 嘉義住宿 -->
+            <div class="hotel-card">
+                <h3>葉綠宿.漫漫回嘉 (8/5)</h3>
+                <span class="tag">嘉義車站走路9分鐘</span>
+                <p><strong>📍 地址：</strong>嘉義市西區民生北路175號177號</p>
+                <p><strong>🛏️ 房型：</strong>兩人一間房，一人一張床 (相鄰兩間)</p>
+                <p><strong>💰 價格：</strong>兩間房共 2,688 元</p>
+            </div>
+
+            <!-- 台南住宿 -->
+            <div class="hotel-card">
+                <h3>村料理 民宿 (8/8)</h3>
+                <span class="tag">台南車站走路12分鐘</span>
+                <p><strong>📍 地址：</strong>台南中西區觀亭街39號</p>
+                <p><strong>🛏️ 房型：</strong>五人一房</p>
+                <p><strong>💰 價格：</strong>4,500 元</p>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>嘉義台南五日遊 | Have a nice trip!</p>
+    </footer>
+
+</body>
+</html>
