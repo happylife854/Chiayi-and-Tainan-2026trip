@@ -14,96 +14,74 @@
         :root {
             --primary-color: #4A90E2;
             --secondary-color: #FF8C00;
-            --light-green: #a8e6cf; /* 淺綠色 */
+            --light-green: #a8e6cf;
             --dark-green: #3b8c66;
             --bg-color: #F7F9FC;
             --text-color: #333333;
             --card-bg: #FFFFFF;
         }
 
-        body {
-            font-family: 'Noto Sans TC', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
-        }
+        body { font-family: 'Noto Sans TC', sans-serif; background-color: var(--bg-color); color: var(--text-color); margin: 0; padding: 0; line-height: 1.6; }
 
-        /* 首頁橫幅 (使用您指定的圖片與標題) */
-        .hero {
-            /* 請確保 image_a5c667.jpg 已經上傳到 GitHub 同一個資料夾 */
-            background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5)), url('image_a5c667.jpg') center/cover no-repeat;
-            height: 50vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            text-align: center;
-            padding: 20px;
-        }
-
+        /* 首頁橫幅 */
+        .hero { background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5)), url('image_a5c667.jpg') center/cover no-repeat; height: 50vh; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; text-align: center; padding: 20px; }
         .hero h1 { font-size: 3rem; margin-bottom: 10px; letter-spacing: 2px; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
+        .hero p { font-size: 1.2rem; background-color: rgba(255,255,255,0.2); padding: 5px 15px; border-radius: 20px; text-shadow: 1px 1px 2px rgba(0,0,0,0.5); }
 
-        .container { max-width: 900px; margin: 0 auto; padding: 20px; overflow: hidden; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 20px; }
         .section-title { text-align: center; font-size: 1.8rem; color: var(--primary-color); margin: 40px 0 20px; font-weight: 700; }
 
-        /* 地圖區塊 */
-        #map {
-            height: 400px;
-            width: 100%;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            margin-bottom: 40px;
-            z-index: 1;
-        }
+        /* --- 頂部區塊：地圖與花費並排 --- */
+        .top-row { display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 40px; }
+        .map-wrapper, .expense-wrapper { flex: 1; min-width: 320px; background: var(--card-bg); border-radius: 12px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .wrapper-title { font-size: 1.4rem; color: var(--primary-color); margin-top: 0; margin-bottom: 15px; text-align: center; font-weight: bold; }
+
+        #map { height: 350px; width: 100%; border-radius: 8px; z-index: 1; }
         .custom-icon { font-size: 28px; text-align: center; line-height: 1; }
 
-        /* 橫排五天簡單行程 (卡片式時間軸) */
-        .horizontal-timeline {
-            display: flex;
-            overflow-x: auto;
-            gap: 15px;
-            padding-bottom: 20px;
-            scroll-snap-type: x mandatory;
-            -webkit-overflow-scrolling: touch;
-        }
+        /* 花費儀表板 */
+        .expense-total { text-align: center; font-size: 1.3rem; font-weight: bold; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px dashed #eee; }
+        .expense-total span { color: var(--secondary-color); font-size: 2rem; display: block; margin-top: 5px; }
+        .expense-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 15px; }
+        .expense-item { background: #f8faff; border: 1px solid #e1e8f0; border-radius: 8px; padding: 10px; text-align: center; }
+        .expense-label { font-size: 0.9rem; color: #666; font-weight: bold; }
+        .expense-value { font-size: 1.1rem; font-weight: bold; margin-top: 5px; color: var(--text-color); }
+        .btn-detail { display: block; width: 100%; background: var(--secondary-color); color: white; border: none; padding: 12px; border-radius: 8px; font-size: 1rem; font-weight: bold; cursor: pointer; transition: 0.3s; text-align: center; box-sizing: border-box; }
+        .btn-detail:hover { background: #e67e22; }
+
+        /* --- 彈出視窗 Modal --- */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); }
+        .modal-content { background-color: #fff; margin: 5% auto; padding: 25px; border-radius: 12px; width: 90%; max-width: 600px; max-height: 85vh; overflow-y: auto; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+        .close-btn { color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer; }
+        .close-btn:hover { color: #333; }
         
-        /* 隱藏/美化卷軸 */
+        .expense-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        .expense-table th, .expense-table td { border-bottom: 1px solid #eee; padding: 10px; text-align: left; }
+        .expense-table th { color: #666; }
+        .expense-table td:last-child { text-align: right; font-weight: bold; }
+        
+        .add-expense-form { background: #f9f9f9; padding: 15px; border-radius: 8px; margin-top: 20px; display: grid; gap: 10px; grid-template-columns: 1fr 2fr 1fr auto; align-items: center; }
+        @media(max-width: 600px) { .add-expense-form { grid-template-columns: 1fr; } }
+        .add-expense-form input, .add-expense-form select { padding: 8px; border: 1px solid #ccc; border-radius: 5px; width: 100%; box-sizing: border-box;}
+        .add-btn { background: var(--dark-green); color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+
+        /* --- 橫排五天簡單行程 --- */
+        .horizontal-timeline { display: flex; overflow-x: auto; gap: 15px; padding-bottom: 20px; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; }
         .horizontal-timeline::-webkit-scrollbar { height: 8px; }
         .horizontal-timeline::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
         .horizontal-timeline::-webkit-scrollbar-thumb { background: var(--light-green); border-radius: 10px; }
-
-        .summary-card {
-            min-width: 220px;
-            flex: 0 0 auto;
-            background: var(--card-bg);
-            border: 3px solid var(--light-green); /* 淺綠色的框框 */
-            border-radius: 12px;
-            padding: 15px;
-            scroll-snap-align: start;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        }
+        .summary-card { min-width: 220px; flex: 0 0 auto; background: var(--card-bg); border: 3px solid var(--light-green); border-radius: 12px; padding: 15px; scroll-snap-align: start; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
         .summary-card h3 { color: var(--dark-green); margin-top: 0; font-size: 1.1rem; border-bottom: 2px solid var(--light-green); padding-bottom: 8px; }
         .summary-card ul { padding-left: 20px; font-size: 0.9rem; margin-bottom: 0; }
         .summary-card li { margin-bottom: 5px; }
 
-        /* 詳細行程區塊 */
-        .detail-card {
-            background: var(--card-bg);
-            border-radius: 12px;
-            padding: 25px;
-            margin-bottom: 25px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            border-left: 6px solid var(--primary-color);
-        }
+        /* --- 詳細行程與住宿區塊 --- */
+        .detail-card { background: var(--card-bg); border-radius: 12px; padding: 25px; margin-bottom: 25px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border-left: 6px solid var(--primary-color); }
         .detail-card h3 { font-size: 1.4rem; color: var(--primary-color); margin-top: 0; display: flex; align-items: center; gap: 10px; }
         .time-item { display: flex; margin-bottom: 15px; border-bottom: 1px dashed #eee; padding-bottom: 10px; }
         .time-label { font-weight: bold; color: var(--secondary-color); min-width: 60px; font-size: 1.1rem; }
         .time-content { flex: 1; }
         
-        /* 阿里山專屬樣式 */
         .alishan-included { background: #f0f9f4; border: 1px solid var(--light-green); border-radius: 8px; padding: 15px; margin: 15px 0; }
         .alishan-included h4 { color: var(--dark-green); margin-top: 0; margin-bottom: 10px; }
         .alishan-included ul { column-count: 2; padding-left: 20px; margin: 0; font-size: 0.9rem; }
@@ -112,23 +90,17 @@
         .food-spot { color: #d35400; font-weight: bold; }
         .notice { font-size: 0.85rem; color: #666; background: #eee; padding: 5px 10px; border-radius: 5px; display: inline-block; margin-top: 5px; }
 
-        /* 花費與住宿區塊保留原有設計 */
-        .expense-dashboard { background: var(--card-bg); border-radius: 12px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 40px; }
-        .expense-total { text-align: center; font-size: 1.5rem; font-weight: bold; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 2px dashed #eee; }
-        .expense-total span { color: var(--secondary-color); font-size: 2rem; }
-        .expense-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; }
-        .expense-item { background: #f8faff; border: 1px solid #e1e8f0; border-radius: 8px; padding: 15px; text-align: center; }
-        .expense-value { font-size: 1.2rem; font-weight: bold; margin-top: 5px; }
-        
         .hotel-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
         .hotel-card { background: var(--card-bg); border-radius: 12px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
         .hotel-card img { width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 15px; }
         .hotel-card h3 { margin-top: 0; color: var(--secondary-color); }
         .tag { display: inline-block; background: #eee; padding: 3px 8px; border-radius: 5px; font-size: 0.85rem; margin-right: 5px; margin-bottom: 10px; }
-        .hotel-actions a.btn { width: 100%; box-sizing: border-box; display: block; padding: 10px; text-align: center; }
+        .hotel-actions a.btn { width: 100%; box-sizing: border-box; display: block; padding: 10px; text-align: center; margin-top: 10px; }
 
-        a.btn { display: inline-block; background-color: var(--primary-color); color: white; text-decoration: none; border-radius: 5px; font-size: 0.95rem; font-weight: bold; transition: background 0.3s; }
+        a.btn { display: inline-block; background-color: var(--primary-color); color: white; text-decoration: none; border-radius: 5px; font-size: 0.95rem; font-weight: bold; transition: background 0.3s; margin-top: 5px; }
         a.btn:hover { background-color: #357ABD; }
+        a.map-link { color: #4A90E2; text-decoration: none; font-size: 0.9rem; font-weight: bold; background: #eef5ff; padding: 2px 6px; border-radius: 4px; margin-left: 5px;}
+        a.map-link:hover { background: #d0e3ff; }
 
         footer { text-align: center; padding: 20px; background-color: #333; color: white; margin-top: 40px; }
     </style>
@@ -137,19 +109,41 @@
 
     <header class="hero">
         <h1>嘉義台南5日遊</h1>
+        <p>2026/8/5(三) - 2026/8/9(日)</p>
     </header>
 
     <div class="container">
         
-        <!-- 一開始先出現地圖 -->
-        <h2 class="section-title">🗺️ 行程地圖</h2>
-        <div id="map"></div>
+        <!-- 頂部區塊：地圖與花費並排 -->
+        <div class="top-row">
+            <!-- 左側/上方：地圖 -->
+            <div class="map-wrapper">
+                <h2 class="wrapper-title">🗺️ 行程地圖</h2>
+                <div id="map"></div>
+            </div>
+
+            <!-- 右側/下方：互動式花費總覽 -->
+            <div class="expense-wrapper">
+                <h2 class="wrapper-title">💰 花費總覽</h2>
+                <div class="expense-total">
+                    群組預估總花費
+                    <span id="total-amount">$ 0</span>
+                </div>
+                <div class="expense-grid">
+                    <div class="expense-item"><div class="expense-label">🏠 住宿</div><div class="expense-value" id="total-stay">$ 0</div></div>
+                    <div class="expense-item"><div class="expense-label">🚆 交通</div><div class="expense-value" id="total-trans">$ 0</div></div>
+                    <div class="expense-item"><div class="expense-label">🍜 食物</div><div class="expense-value" id="total-food">$ 0</div></div>
+                    <div class="expense-item"><div class="expense-label">🎒 旅行</div><div class="expense-value" id="total-tour">$ 0</div></div>
+                </div>
+                <button class="btn-detail" onclick="openModal()">📝 點此查看細項 / 新增花費</button>
+            </div>
+        </div>
 
         <!-- 緊接著橫排出現五天簡單行程 -->
         <h2 class="section-title">📅 每日行程總覽 (左右滑動)</h2>
         <div class="horizontal-timeline">
             <div class="summary-card">
-                <h3>第 1 天 (8/5)</h3>
+                <h3>第 1 天 8/5(三)</h3>
                 <ul>
                     <li>高鐵抵達嘉義</li>
                     <li>巴倫司康、御香屋</li>
@@ -158,7 +152,7 @@
                 </ul>
             </div>
             <div class="summary-card">
-                <h3>第 2 天 (8/6)</h3>
+                <h3>第 2 天 8/6(四)</h3>
                 <ul>
                     <li>嘉義車站集合出發</li>
                     <li>漫步阿里山森林道</li>
@@ -167,7 +161,7 @@
                 </ul>
             </div>
             <div class="summary-card">
-                <h3>第 3 天 (8/7)</h3>
+                <h3>第 3 天 8/7(五)</h3>
                 <ul>
                     <li>祝山觀日出與雲海</li>
                     <li>高山植物園、小笠原山</li>
@@ -176,7 +170,7 @@
                 </ul>
             </div>
             <div class="summary-card">
-                <h3>第 4 天 (8/8)</h3>
+                <h3>第 4 天 8/8(六)</h3>
                 <ul>
                     <li>水山療癒步道</li>
                     <li>搭阿里山火車下山</li>
@@ -185,7 +179,7 @@
                 </ul>
             </div>
             <div class="summary-card">
-                <h3>第 5 天 (8/9)</h3>
+                <h3>第 5 天 8/9(日)</h3>
                 <ul>
                     <li>台南包車一日遊</li>
                     <li>鹿耳門天后宮</li>
@@ -200,17 +194,34 @@
 
         <!-- Day 1 -->
         <div class="detail-card">
-            <h3>1️⃣ 第1天 (8/5)：抵達嘉義・市區吃貨大集結</h3>
+            <h3>1️⃣ 第1天 8/5(三)：抵達嘉義・市區吃貨大集結</h3>
             <div class="time-item"><div class="time-label">14:29</div><div class="time-content">板橋搭乘高鐵 649 車次，15:48 抵達嘉義</div></div>
-            <div class="time-item"><div class="time-label">下午</div><div class="time-content">市區點心：<span class="food-spot">巴倫司康</span>、<span class="food-spot">源興御香屋</span> (必喝葡萄柚綠茶)</div></div>
-            <div class="time-item"><div class="time-label">晚上</div><div class="time-content">晚餐：<span class="food-spot">豆豆小籠湯包</span> (內用至20:10)<br>宵夜：<span class="food-spot">1961海鮮碳烤</span></div></div>
+            <div class="time-item">
+                <div class="time-label">下午</div>
+                <div class="time-content">
+                    市區點心：<br>
+                    <span class="food-spot">巴倫司康</span> <a href="https://maps.app.goo.gl/gFPW6cnhvWwuQGdp9" target="_blank" class="map-link">📍地圖</a><br>
+                    <span class="food-spot">源興御香屋</span> (必喝葡萄柚綠茶) <a href="https://maps.app.goo.gl/gFPW6cnhvWwuQGdp9" target="_blank" class="map-link">📍地圖</a>
+                </div>
+            </div>
+            <div class="time-item">
+                <div class="time-label">晚上</div>
+                <div class="time-content">
+                    晚餐：<span class="food-spot">豆豆小籠湯包</span> (內用至20:10) <a href="https://maps.app.goo.gl/gFPW6cnhvWwuQGdp9" target="_blank" class="map-link">📍地圖</a><br>
+                    宵夜：<span class="food-spot">1961海鮮碳烤</span> <a href="https://maps.app.goo.gl/gFPW6cnhvWwuQGdp9" target="_blank" class="map-link">📍地圖</a>
+                </div>
+            </div>
             <div class="time-item"><div class="time-label">住宿</div><div class="time-content">入住：葉綠宿.漫漫回嘉</div></div>
         </div>
 
         <!-- Day 2-4 (阿里山行程區塊) -->
         <div class="detail-card" style="border-left-color: var(--dark-green);">
-            <h3 style="color: var(--dark-green);">🌲 第2天～第4天 (8/6-8/8)：阿里山三日遊 & 轉往台南</h3>
+            <h3 style="color: var(--dark-green);">🌲 第2天～第4天 8/6(四)-8/8(六)：阿里山三日遊 & 轉往台南</h3>
             
+            <div style="margin-bottom: 20px;">
+                <a href="https://www.kkday.com/zh-tw/product/186797" target="_blank" class="btn">🔗 前往查看 KKday 阿里山三日遊方案</a>
+            </div>
+
             <div class="alishan-included">
                 <h4>✅ KKday 阿里山行程包含項目：</h4>
                 <ul>
@@ -227,16 +238,24 @@
                     <li>阿里山森林遊樂區門票</li>
                 </ul>
             </div>
-
-            <h4 style="border-bottom: 2px solid #eee; padding-bottom: 5px;">📍 [阿里山行程 第1天] 8/6 (週四) - 當天餐點：晚餐</h4>
+            
+            <h4 style="border-bottom: 2px solid #eee; padding-bottom: 5px;">📍 [阿里山行程 第1天] 8/6(四) - 當天餐點：晚餐</h4>
             <div class="time-item"><div class="time-label">09:00</div><div class="time-content">嘉義高鐵站 3 號出口集合，或於愛玩美旅行社（嘉義火車站旁）集合，專人接待解說。</div></div>
             <div class="time-item"><div class="time-label">09:30</div><div class="time-content">搭車前往阿里山森林遊樂園區。</div></div>
             <div class="time-item"><div class="time-label">12:00</div><div class="time-content">抵達園區。建議先搭賓館接駁車寄放行李，再至商店街餐廳享用午餐(自理)。</div></div>
+            <div class="time-item">
+                <div class="time-label">美食</div>
+                <div class="time-content">
+                    (奮起湖周邊推薦必吃)：<br>
+                    <span class="food-spot">百年檜木甜甜圈</span> - 木屋現烤 <a href="https://maps.app.goo.gl/gFPW6cnhvWwuQGdp9" target="_blank" class="map-link">📍地圖</a><br>
+                    <span class="food-spot">達官現炒</span> - 在地野味山產 <a href="https://maps.app.goo.gl/gFPW6cnhvWwuQGdp9" target="_blank" class="map-link">📍地圖</a>
+                </div>
+            </div>
             <div class="time-item"><div class="time-label">13:30</div><div class="time-content">導遊帶隊漫步林道 (全程約3小時)<br><span class="notice">路線：旅客中心(搭遊園車) → 沼平車站 → 姊妹潭 → 木蘭園 → 受鎮宮 → 最高學府香林國小 → 千歲檜 → 香林神木 → 慈雲觀景 → 三代木 → 阿里山工作站 → 受鎮宮(搭遊園車) → 旅客中心</span></div></div>
             <div class="time-item"><div class="time-label">18:30</div><div class="time-content">自行至特約餐廳享用阿里山風味晚餐。</div></div>
             <div class="time-item"><div class="time-label">19:00</div><div class="time-content">建議自行觀賞阿里山夜景或夜遊商店街。</div></div>
 
-            <h4 style="border-bottom: 2px solid #eee; padding-bottom: 5px;">📍 [阿里山行程 第2天] 8/7 (週五) - 當天餐點：早餐</h4>
+            <h4 style="border-bottom: 2px solid #eee; padding-bottom: 5px;">📍 [阿里山行程 第2天] 8/7(五) - 當天餐點：早餐</h4>
             <div class="time-item"><div class="time-label">04:00</div><div class="time-content">搭乘觀日小火車至祝山觀賞日出及雲海 (車程單程約25分鐘，出發時間依季節而定)。</div></div>
             <div class="time-item"><div class="time-label">08:00</div><div class="time-content">於阿里山飯店或餐廳享用早餐。</div></div>
             <div class="time-item"><div class="time-label">09:00</div><div class="time-content">自由活動：建議前往祝山觀日步道、高山植物園，以及可眺望玉山主峰的小笠原山眺望台。</div></div>
@@ -244,54 +263,69 @@
             <div class="time-item"><div class="time-label">13:10</div><div class="time-content">建議前往塔山步道，眺望玉山群峰與阿里山全貌 (全程來回約3-4小時)。</div></div>
             <div class="time-item"><div class="time-label">18:00</div><div class="time-content">自行前往阿里山商店街餐廳享用晚餐 (自理)。</div></div>
 
-            <h4 style="border-bottom: 2px solid #eee; padding-bottom: 5px;">📍 [阿里山行程 第3天] 8/8 (週六) - 當天餐點：早餐、午餐 (轉往台南)</h4>
+            <h4 style="border-bottom: 2px solid #eee; padding-bottom: 5px;">📍 [阿里山行程 第3天] 8/8(六) - 當天餐點：早餐、午餐 (轉往台南)</h4>
             <div class="time-item"><div class="time-label">04:00</div><div class="time-content">可再次搭乘觀日小火車觀日出。</div></div>
             <div class="time-item"><div class="time-label">08:00</div><div class="time-content">於阿里山飯店或餐廳享受早餐。</div></div>
             <div class="time-item"><div class="time-label">09:00</div><div class="time-content">自由活動：建議前往阿里山水山療癒步道 (全臺第一條森林療癒主題路線，全長約863公尺)。</div></div>
             <div class="time-item"><div class="time-label">11:00</div><div class="time-content">辦理退房手續，寄放行李後自由活動。</div></div>
             <div class="time-item"><div class="time-label">11:50</div><div class="time-content">於阿里山火車站搭乘小火車前往嘉義 (請務必提早10分鐘抵達)。</div></div>
             <div class="time-item"><div class="time-label">15:45</div><div class="time-content">阿里山小火車抵達嘉義火車站，結束山區行程。</div></div>
-            <div class="time-item"><div class="time-label">16:19</div><div class="time-content"><strong>轉場交通：</strong>搭乘台鐵 125 車次前往台南 (16:59抵達)。</div></div>
+            <div class="time-item"><div class="time-label">16:19</div><div class="time-content"><strong>轉場交通：</strong>搭乘台鐵 125 車次前往台南 (單價$203，16:59抵達)。</div></div>
             <div class="time-item"><div class="time-label">晚上</div><div class="time-content">於台南民宿放行李 👉 漁光島看夕陽 👉 市區吃好料！入住：村料理民宿。</div></div>
         </div>
 
         <!-- Day 5 -->
         <div class="detail-card">
-            <h3>5️⃣ 第5天 (8/9)：台南包車一日遊 & 賦歸</h3>
+            <h3>5️⃣ 第5天 8/9(日)：台南包車一日遊 & 賦歸</h3>
             <div class="time-item"><div class="time-label">09:00</div><div class="time-content">包車 8 小時出發，預定景點：鹿耳門天后宮、四草綠色隧道。</div></div>
             <div class="time-item"><div class="time-label">下午</div><div class="time-content">市區吃飯，安插 1-2 個討論景點。</div></div>
-            <div class="time-item"><div class="time-label">17:28</div><div class="time-content">台南搭乘高鐵 1246 車次，18:46 抵達板橋。</div></div>
+            <div class="time-item"><div class="time-label">17:28</div><div class="time-content">台南搭乘高鐵 1246 車次 (單價$1320)，18:46 抵達板橋。</div></div>
         </div>
 
-        <!-- 費用與住宿區塊 -->
-        <h2 class="section-title">💰 花費總覽 & 🏡 住宿資訊</h2>
-        <div class="expense-dashboard">
-            <div class="expense-total">群組總花費：<span>$ 28,148</span></div>
-            <div class="expense-grid">
-                <div class="expense-item"><div>🏠 住宿</div><div class="expense-value">$ 7,188</div></div>
-                <div class="expense-item"><div>🚆 交通</div><div class="expense-value">$ 11,005</div></div>
-                <div class="expense-item"><div>🍜 食物</div><div class="expense-value">$ 0</div></div>
-                <div class="expense-item"><div>🎒 旅行</div><div class="expense-value">$ 9,955</div></div>
-            </div>
-        </div>
-
+        <!-- 住宿資訊 -->
+        <h2 class="section-title">🏡 住宿資訊</h2>
         <div class="hotel-grid">
             <div class="hotel-card">
                 <img src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?q=80&w=600&auto=format&fit=crop" alt="質感旅店">
-                <h3>葉綠宿.漫漫回嘉 (8/5)</h3>
+                <h3>葉綠宿.漫漫回嘉 8/5(三)</h3>
                 <span class="tag">🚶‍♂️ 嘉義車站走路9分鐘</span>
                 <p>📍 嘉義市西區民生北路175號177號<br>💰 $ 2,688 (兩人一間房共兩間)</p>
                 <div class="hotel-actions"><a href="https://www.agoda.com/sp/Gemp13fdJCz" target="_blank" class="btn">🔗 Agoda 訂房資訊</a></div>
             </div>
             <div class="hotel-card">
                 <img src="https://images.unsplash.com/photo-1522771731478-446370c8f957?q=80&w=600&auto=format&fit=crop" alt="溫馨民宿">
-                <h3>村料理 民宿 (8/8)</h3>
+                <h3>村料理 民宿 8/8(六)</h3>
                 <span class="tag">🚶‍♂️ 台南車站走路12分鐘</span>
                 <p>📍 台南中西區觀亭街39號<br>💰 $ 4,500 (五人一房)</p>
-                <div class="hotel-actions"><a href="https://www.booking.com/Share-vARxYL0" target="_blank" class="btn">🔗 Booking 訂房資訊</a></div>
+                <div class="hotel-actions"><a href="https://www.booking.com/hotel/tw/cun-cuisine-homestay.zh-tw.html?aid=1288260&label=metagha-link-LUTW-hotel-15357075_dev-mobile_los-1_bw-59_dow-Sunday_defdate-1_room-0_gstadt-2_rateid-dg_aud-0_gacid-21415143289_mcid-10_ppa-0_clrid-0_ad-1_gstkid-0_checkin-20260906_ppt-GEd_lp-2158_r-13672792813809162040-vARxYL0%401783561694&sid=03bc74c7c3e9e418cbab35e3743cccdb&all_sr_blocks=266072502_370084904_2_0_0%2C266072502_370084904_2_0_0%2C266072501_370084904_2_0_0&checkin=2026-08-08&checkout=2026-08-09&dest_id=2660725&dest_type=hotel&dist=0&group_adults=5&group_children=0&hapos=1&highlighted_blocks=266072502_370084904_2_0_0%2C266072502_370084904_2_0_0%2C266072501_370084904_2_0_0&hpos=1&matching_block_id=266072502_370084904_2_0_0&no_rooms=1&req_adults=5&req_children=0&room1=A%2CA%2CA%2CA%2CA&sb_price_type=total&sr_order=popularity&sr_pri_blocks=266072502_370084904_2_0_0__241200%2C266072502_370084904_2_0_0__268200&srepoch=1784044635&srpvid=dbef70275094023a&type=total&ucfs=1&" target="_blank" class="btn">🔗 Booking 訂房資訊</a></div>
             </div>
         </div>
 
+    </div>
+
+    <!-- 記帳明細彈出視窗 -->
+    <div id="expenseModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h2 style="margin-top:0; color: var(--primary-color);">📝 費用明細清單</h2>
+            <p style="font-size:0.85rem; color:#888;">(此表單僅會暫存於您當前的瀏覽器裝置中，方便個人試算紀錄)</p>
+            
+            <table class="expense-table" id="expense-list">
+                <!-- JS 會動態將項目塞進來 -->
+            </table>
+
+            <div class="add-expense-form">
+                <select id="new-cat">
+                    <option value="住宿">🏠 住宿</option>
+                    <option value="交通">🚆 交通</option>
+                    <option value="食物">🍜 食物</option>
+                    <option value="旅行">🎒 旅行</option>
+                </select>
+                <input type="text" id="new-name" placeholder="項目名稱 (例：宵夜啤酒)">
+                <input type="number" id="new-amount" placeholder="金額 ($)">
+                <button class="add-btn" onclick="addExpense()">新增</button>
+            </div>
+        </div>
     </div>
 
     <footer>
@@ -301,18 +335,121 @@
     <!-- 引入地圖套件 Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
+        // --- 地圖初始化 ---
         var map = L.map('map').setView([23.25, 120.45], 9);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '© OpenStreetMap contributors' }).addTo(map);
 
         var hotelIcon = L.divIcon({className: 'custom-icon', html: '🏠', iconSize: [30, 30], iconAnchor: [15, 30]});
         var spotIcon = L.divIcon({className: 'custom-icon', html: '📍', iconSize: [30, 30], iconAnchor: [15, 30]});
 
-        L.marker([23.4764, 120.4431], {icon: hotelIcon}).addTo(map).bindPopup('<b>🏠 葉綠宿.漫漫回嘉</b><br>8/5 嘉義住宿').openPopup();
-        L.marker([22.9984, 120.2074], {icon: hotelIcon}).addTo(map).bindPopup('<b>🏠 村料理</b><br>8/8 台南住宿');
-        L.marker([23.5133, 120.8060], {icon: spotIcon}).addTo(map).bindPopup('<b>🌲 阿里山森林遊樂區</b><br>8/6-8/8 行程');
+        L.marker([23.4764, 120.4431], {icon: hotelIcon}).addTo(map).bindPopup('<b>🏠 葉綠宿.漫漫回嘉</b><br>8/5(三) 嘉義住宿').openPopup();
+        L.marker([22.9984, 120.2074], {icon: hotelIcon}).addTo(map).bindPopup('<b>🏠 村料理</b><br>8/8(六) 台南住宿');
+        L.marker([23.5133, 120.8060], {icon: spotIcon}).addTo(map).bindPopup('<b>🌲 阿里山森林遊樂區</b><br>8/6(四)-8/8(六) 行程');
         L.marker([23.5041, 120.6946], {icon: spotIcon}).addTo(map).bindPopup('<b>🚂 奮起湖老街</b><br>阿里山中途站');
-        L.marker([22.9796, 120.1557], {icon: spotIcon}).addTo(map).bindPopup('<b>🌅 漁光島</b><br>8/8 傍晚看夕陽');
-        L.marker([23.0198, 120.1363], {icon: spotIcon}).addTo(map).bindPopup('<b>🛶 四草綠色隧道</b><br>8/9 台南包車景點');
+        L.marker([22.9796, 120.1557], {icon: spotIcon}).addTo(map).bindPopup('<b>🌅 漁光島</b><br>8/8(六) 傍晚看夕陽');
+        L.marker([23.0198, 120.1363], {icon: spotIcon}).addTo(map).bindPopup('<b>🛶 四草綠色隧道</b><br>8/9(日) 台南包車景點');
+
+        // --- 互動式記帳功能 ---
+        // 預設已知的固定花費 (高鐵 945, 台鐵 203, 高鐵 1320, KKday 8000)
+        const defaultData = [
+            { id: 1, category: '住宿', name: '葉綠宿.漫漫回嘉 (4人)', amount: 2688 },
+            { id: 2, category: '住宿', name: '村料理民宿 (5人)', amount: 4500 },
+            { id: 3, category: '交通', name: '8/5 去程高鐵 ($945 x 4人)', amount: 3780 },
+            { id: 4, category: '交通', name: '8/8 嘉義到台南火車 ($203 x 5人)', amount: 1015 },
+            { id: 5, category: '交通', name: '8/9 回程高鐵 ($1320 x 5人)', amount: 6600 },
+            { id: 6, category: '旅行', name: '阿里山KKday套票含住宿 ($8000 x 4人)', amount: 32000 }
+        ];
+
+        let expenses = [];
+
+        // 讀取紀錄或載入預設
+        function loadExpenses() {
+            const saved = localStorage.getItem('tripExpenses');
+            if (saved) {
+                expenses = JSON.parse(saved);
+            } else {
+                expenses = [...defaultData];
+                saveExpenses();
+            }
+            updateDashboard();
+        }
+
+        // 儲存進瀏覽器暫存
+        function saveExpenses() {
+            localStorage.setItem('tripExpenses', JSON.stringify(expenses));
+            updateDashboard();
+        }
+
+        // 更新面板與清單
+        function updateDashboard() {
+            let total = 0;
+            let sums = { '住宿': 0, '交通': 0, '食物': 0, '旅行': 0 };
+
+            let listHtml = '<tr><th>類別</th><th>項目名稱</th><th>金額</th><th>操作</th></tr>';
+
+            expenses.forEach((item, index) => {
+                total += item.amount;
+                if(sums[item.category] !== undefined) sums[item.category] += item.amount;
+                
+                listHtml += `<tr>
+                    <td>${item.category}</td>
+                    <td>${item.name}</td>
+                    <td>$ ${item.amount.toLocaleString()}</td>
+                    <td><button onclick="deleteExpense(${index})" style="background:red;color:white;border:none;border-radius:3px;cursor:pointer;">刪除</button></td>
+                </tr>`;
+            });
+
+            // 寫入面板
+            document.getElementById('total-amount').innerText = `$ ${total.toLocaleString()}`;
+            document.getElementById('total-stay').innerText = `$ ${sums['住宿'].toLocaleString()}`;
+            document.getElementById('total-trans').innerText = `$ ${sums['交通'].toLocaleString()}`;
+            document.getElementById('total-food').innerText = `$ ${sums['食物'].toLocaleString()}`;
+            document.getElementById('total-tour').innerText = `$ ${sums['旅行'].toLocaleString()}`;
+
+            // 寫入彈出視窗清單
+            document.getElementById('expense-list').innerHTML = listHtml;
+        }
+
+        // 新增花費
+        function addExpense() {
+            const cat = document.getElementById('new-cat').value;
+            const name = document.getElementById('new-name').value;
+            const amount = parseInt(document.getElementById('new-amount').value);
+
+            if (!name || isNaN(amount)) {
+                alert("請填寫完整的項目名稱與金額！");
+                return;
+            }
+
+            expenses.push({ id: Date.now(), category: cat, name: name, amount: amount });
+            
+            // 清空輸入框
+            document.getElementById('new-name').value = '';
+            document.getElementById('new-amount').value = '';
+            
+            saveExpenses();
+        }
+
+        // 刪除花費
+        function deleteExpense(index) {
+            if(confirm("確定要刪除這筆紀錄嗎？")) {
+                expenses.splice(index, 1);
+                saveExpenses();
+            }
+        }
+
+        // 控制彈出視窗
+        function openModal() { document.getElementById('expenseModal').style.display = 'block'; }
+        function closeModal() { document.getElementById('expenseModal').style.display = 'none'; }
+        
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('expenseModal')) {
+                closeModal();
+            }
+        }
+
+        // 啟動載入
+        loadExpenses();
     </script>
 </body>
 </html>
